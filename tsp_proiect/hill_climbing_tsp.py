@@ -1,15 +1,10 @@
 import random
 
-from simpleai.search import SearchProblem, hill_climbing
-from tsp_proiect.src.utils.backtracking import citeste_matrice
+from simpleai.search import SearchProblem, hill_climbing, hill_climbing_random_restarts
 
 class TSPHillClimbing(SearchProblem):
-    orase : list
-    n: int
-# [[1,2,3]]
-
-    def __init__(self, orase, n, initial):
-        super().__init__(initial_state=initial)
+    def __init__(self, orase, n):
+        super().__init__()
         self.orase = orase
         self.n = n
 
@@ -31,26 +26,25 @@ class TSPHillClimbing(SearchProblem):
     def result(self, state, action): # (1,2)
         new_state = list(state)
         new_state[action[0]], new_state[action[1]] = new_state[action[1]], new_state[action[0]]
-        print(self.value(state), state, "->", self.value(new_state), new_state, "action:", action)
+        # print(self.value(state), state, "->", self.value(new_state), new_state, "action:", action)
 
         return tuple(new_state)
 
     def value(self, state):
         dist = 0
         for i in range(len(state) - 1): # 2 1 3 4 0 2
-            dist += orase[state[i]][state[i+1]]
-        dist += orase[state[-1]][state[0]]
-        print("distanta in value", dist)
+            dist += self.orase[state[i]][state[i+1]]
+        dist += self.orase[state[-1]][state[0]]
+        # print("distanta in value", dist)
         return -dist
 
-# print()
-n, orase = citeste_matrice("in.txt")
-initial_state = [i for i in range(n)]
+    def generate_random_state(self):
+        initial_state = [i for i in range(1, self.n)]
+        random.shuffle(initial_state)
+        return [0] + initial_state
 
-random.shuffle(initial_state)
-# print(orase)
-problem = TSPHillClimbing(n=n, orase=orase, initial=[0,1,4,2,3])
-result = hill_climbing(problem)
+def rezolva_hill_climbing(orase, nr_orase):
+    problem = TSPHillClimbing(n=nr_orase, orase=orase)
+    result = hill_climbing_random_restarts(problem, restarts_limit=1)
 
-print(result.state)
-print(result.value)
+    return result, result.value
