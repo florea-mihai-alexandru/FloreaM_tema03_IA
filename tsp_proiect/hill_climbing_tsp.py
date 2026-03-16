@@ -1,6 +1,7 @@
+import random
+
 from simpleai.search import SearchProblem, hill_climbing
 from tsp_proiect.src.utils.backtracking import citeste_matrice
-import itertools
 
 class TSPHillClimbing(SearchProblem):
     orase : list
@@ -40,27 +41,16 @@ class TSPHillClimbing(SearchProblem):
             dist += orase[state[i]][state[i+1]]
         dist += orase[state[-1]][state[0]]
         print("distanta in value", dist)
-        return dist
-
-    # def is_goal(self, state):
-    #     return len(state) == self.n
-    #
-    # def cost(self, state, action, state2):
-    #     orasCur = self.orase[state[-1]]
-    #     cost = orasCur[action]
-    #     return cost
-
-    # def heuristic(self, state):
-    #     # how far are we from the goal? O
-    #     wrong = sum([1 if state[i] == state[-1] else 0
-    #                 for i in range(len(state)-1)])
-    #     missing = self.n - len(state)
-    #     return wrong + missing
+        return -dist
 
 # print()
 n, orase = citeste_matrice("in.txt")
+initial_state = [i for i in range(n)]
+
+random.shuffle(initial_state)
 # print(orase)
-problem = TSPHillClimbing(n=n, orase=orase, initial=(0,1,2,3,4))
+problem = TSPHillClimbing(n=n, orase=orase, initial=[0,1,4,2,3])
 result = hill_climbing(problem)
 
 print(result.state)
+print(result.value)
