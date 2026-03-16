@@ -8,6 +8,11 @@ class TSPHillClimbing(SearchProblem):
         self.orase = orase
         self.n = n
 
+        self.actiuni = []
+        for i in range(1, n - 1):
+            for j in range(i + 1, n):
+                self.actiuni.append((i, j))
+
     def getVecini(self, state):
        actions = []
        for i in range(1, len(state) - 1):
@@ -18,7 +23,8 @@ class TSPHillClimbing(SearchProblem):
 
     def actions(self, state):
         if len(state) < self.n+1:
-            return self.getVecini(state)
+            return self.actiuni
+            # return self.getVecini(state)
         else:
             return []
 
