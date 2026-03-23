@@ -1,22 +1,37 @@
 import numpy as np
 
 def get_orase(nr_orase):
+    """
+    Generates a symmetric distance matrix for a given number of cities
+    and saves it to a file.
+
+    The distances are randomly generated integers between 1 and 99.
+    The matrix is symmetric, and the diagonal remains zero.
+
+    Args:
+        nr_orase (int): Number of cities.
+
+    Returns:
+        str: Path to the generated file containing the distance matrix.
+    """
     orase = np.zeros((nr_orase, nr_orase), dtype=int)
     np.random.seed(1)
     for i in range(nr_orase):
         for j in range(i+1, nr_orase):
-            orase[i, j] = np.random.randint(1,10, dtype=int)
+            orase[i, j] = np.random.randint(1,100, dtype=int)
             orase[j, i] = orase[i, j]
 
     filename = str(nr_orase) + "_cities_file.txt"
-    with open(filename, "w") as file:
+    dirr = 'input/' + filename
+
+    with open(dirr, "w") as file:
         file.write(str(nr_orase) + "\n")
         for i in range(nr_orase):
             for j in range(nr_orase):
                 file.write(str(orase[i, j]) + " ")
             file.write("\n")
 
-    return filename
+    return dirr
 
 def citeste_matrice(cale_fisier):
     """Citeste matricea de distante dintr-un fisier text.

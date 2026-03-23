@@ -13,7 +13,6 @@ Exemplu:
 import sys
 import time
 from tsp_proiect.src.utils.io_utils import citeste_matrice
-# from io_utils import  citeste_matrice
 
 # Variabile globale pentru solutia optima.
 # Sunt resetate la inceputul fiecarei rulari in rezolva_tsp().
@@ -105,10 +104,3 @@ def rezolva_tsp(cale_fisier):
 
     # print(f"Timp de executie: {durata:.6f} secunde")
 
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Utilizare: python backtracking_ref.py <fisier_intrare>")
-        print("Exemplu:   python backtracking_ref.py orase.txt")
-        sys.exit(1)
-    print(rezolva_tsp(sys.argv[1]))
